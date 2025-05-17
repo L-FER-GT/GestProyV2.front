@@ -5,7 +5,19 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
+const fetchUsuarios = async () => {
+  try {
+    const response = await fetch('https://gestproyv2-back.onrender.com/usuarios');
+    if (!response.ok) {
+      throw new Error('Error al obtener usuarios');
+    }
+    const usuarios = await response.json();
+    console.log(usuarios);
+    return usuarios;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
   return (
     <>
       <div>
@@ -18,7 +30,9 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={() => {
+          fetchUsuarios()
+          setCount((count) => count + 1)}}>
           count is {count}
         </button>
         <p>
